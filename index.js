@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import nodeTelegramBotApi from 'node-telegram-bot-api';
+import bodyParser from 'body-parser';
+import axios from 'axios';
 
 dotenv.config();
 
@@ -10,6 +12,31 @@ const url = process.env.URL;
 
 const app = express();
 const bot = new nodeTelegramBotApi(token, { polling: true });
+
+function sendwhatsappmsg(msg) {
+  const options = {
+    method: 'post',
+    url: 'https://graph.facebook.com/v17.0/128077970274249/messages',
+    headers: {
+      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: '256706401095',
+      type: 'text',
+      text: {
+        preview_url: false,
+        body: msg,
+      },
+    },
+  };
+  return axios(options);
+}
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 bot.setWebHook(`${url}/bot${token}`);
 
@@ -27,7 +54,8 @@ bot.onText(/\/sendmessage/, (msg) => {
 
 bot.on('message', (msg) => {
   if (!msg.text.toString().includes('/')) {
-    bot.sendMessage(msg.chat.id, msg.text.toString());
+    sendwhatsappmsg(msg.text.toString());
+    bot.sendMessage(msg.chat.id, msg.text.toString() + 'Sent to whatsapp.');
   }
 });
 
