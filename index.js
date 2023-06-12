@@ -7,22 +7,12 @@ dotenv.config();
 
 const token = '5789334803:AAGNSfHI5ZulRl-UuS6AgnXASYsHq-FlIpM';
 const port = process.env.PORT;
-const url = process.env.URL;
 
-const options = {
-  webhook: {
-    port,
-  },
-  polling: true,
-};
-
-const bot = new nodeTelegramBotApi(token, options);
+const bot = new nodeTelegramBotApi(token, { polling: true });
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-bot.setWebHook(`${url}/bot${token}`);
 
 bot.onText(/\/start/, (msg) => {
   bot.sendMessage(msg.chat.id, `Hello ${msg.from.first_name}`, {
