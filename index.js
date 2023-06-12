@@ -1,18 +1,13 @@
-import express from 'express';
-import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
 import nodeTelegramBotApi from 'node-telegram-bot-api';
 dotenv.config();
 
-const token = '5789334803:AAGNSfHI5ZulRl-UuS6AgnXASYsHq-FlIpM';
+const token = '5789334803:AAEpeoS-o1rj4Q-TJIxZ6BPLpi32hWNUoq4';
 const port = process.env.PORT;
 
 const bot = new nodeTelegramBotApi(token, { polling: true });
 const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 bot.onText(/\/start/, (msg) => {
   bot.sendMessage(msg.chat.id, `Hello ${msg.from.first_name}`, {
