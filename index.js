@@ -31,7 +31,7 @@ bot.on('message', (msg) => {
   }
 });
 
-app.post(`/bot${TOKEN}`, (req, res) => {
+app.post(`/bot${token}`, (req, res) => {
   bot.processUpdate(req.body);
   res.sendStatus(200);
 });
