@@ -6,6 +6,7 @@ dotenv.config();
 
 const token = process.env.TOKEN;
 const port = process.env.PORT;
+const url = process.env.URL;
 
 const app = express();
 const bot = new nodeTelegramBotApi(token, { polling: true });
