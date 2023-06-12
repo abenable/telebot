@@ -8,8 +8,8 @@
     "node": "20.1.0"
   },
   "scripts": {
-    "build": "nodemon src/index.js",
-    "start": "node src/index.js",
+    "build": "node src/index.js",
+    "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
