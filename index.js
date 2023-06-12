@@ -42,9 +42,6 @@ bot.on('message', (msg) => {
   }
 });
 
-app.use('/whatsapp', whatsappRouter);
-app.use(`/bot${token}`, botRouter);
-
 app.post(`bot${token}`, (req, res) => {
   bot.processUpdate(req.body);
   res.sendStatus(200);
