@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import nodeTelegramBotApi from 'node-telegram-bot-api';
 dotenv.config();
 
-const token = process.env.TOKEN;
+const token = '5789334803:AAGNSfHI5ZulRl-UuS6AgnXASYsHq-FlIpM';
 const port = process.env.PORT;
 const url = process.env.URL;
 
