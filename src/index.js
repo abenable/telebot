@@ -32,7 +32,7 @@ bot.onText(/\/sendmessage/, async (msg) => {
 });
 
 bot.on('message', async (msg) => {
-  if (!msg.text.includes('/')) {
+  if (!String(msg.text).includes('/')) {
     await sendwhatsappmsg(msg.text);
     await bot.sendMessage(msg.chat.id, msg.text + '\nSent to whatsapp.');
   }
