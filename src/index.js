@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import nodeTelegramBotApi from 'node-telegram-bot-api';
 import bodyParser from 'body-parser';
 import { sendwhatsappmsg } from './controllers/whatsappControlller.js';
+import { teleRouter } from './routes/tele.js';
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ bot.on('message', async (msg) => {
 bot.on('photo', async (msg) => {
   await bot.sendPhoto(msg.chat.id, msg.photo.at(0).file_id);
 });
+app.use('/', teleRouter);
 
 app.post(`/bot${token}`, (req, res) => {
   bot.processUpdate(req.body);
