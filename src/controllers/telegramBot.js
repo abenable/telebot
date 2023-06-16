@@ -38,7 +38,12 @@ bot.onText(/\/sendmessage/, async (msg) => {
 bot.onText(/\/chat/, async (msg) => {
   await bot.sendMessage(
     msg.chat.id,
-    'You have been connected to the AI chatbot. \n\nAsk anything...'
+    'You have been connected to the AI chatbot. \n\nAsk anything...',
+    {
+      reply_markup: {
+        keyboard: [['👆 Type your question.', '/exit']],
+      },
+    }
   );
 
   bot.on('message', async (msg) => {
