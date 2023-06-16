@@ -26,7 +26,7 @@ bot.setWebHook(`${url}/bot${token}`);
 bot.onText(/\/start/, async (msg) => {
   bot.sendMessage(msg.chat.id, `Hello ${msg.from.first_name}`, {
     reply_markup: {
-      keyboard: [['/chat', '/start']],
+      keyboard: [['/start', '/chat']],
     },
   });
 });
@@ -36,7 +36,10 @@ bot.onText(/\/sendmessage/, async (msg) => {
 });
 
 bot.onText(/\/chat/, async (msg) => {
-  await bot.sendMessage(msg.chat.id, 'This command is working');
+  await bot.sendMessage(
+    msg.chat.id,
+    'You have been connected to the AI chatbot. \n\nAsk anything...'
+  );
 
   bot.on('message', async (msg) => {
     if (!String(msg.text).includes('/')) {
@@ -46,9 +49,28 @@ bot.onText(/\/chat/, async (msg) => {
       });
       await bot.sendMessage(
         msg.chat.id,
-        chat_completion.data.choices[0].message.content + '\nSent to whatsapp.'
+        chat_completion.data.choices[0].message.content,
+        {
+          reply_markup: {
+            keyboard: [['/exit', '/start']],
+          },
+        }
       );
-      await sendwhatsappmsg(msg.text);
+      await sendwhatsappmsg(
+        `${msg.text} \n\n ${chat_completion.data.choices[0].message.content}`
+      );
+    } else if (String(msg.text).includes('/exit')) {
+      await bot.sendMessage(
+        msg.chat.id,
+        'Thank you for trying out this feature.',
+        {
+          reply_markup: {
+            keyboard: [['/start', '/chat']],
+          },
+        }
+      );
+    } else {
+      await bot.sendMessage(msg.chat.id, 'This command is undefined.');
     }
   });
 });
